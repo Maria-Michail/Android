@@ -40,7 +40,12 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return tasks.size();
+        if(tasks !=null){
+            return tasks.size();
+        }
+        else {
+            return 0;
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

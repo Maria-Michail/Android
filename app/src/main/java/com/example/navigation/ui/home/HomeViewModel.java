@@ -5,15 +5,10 @@ import android.app.Application;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
-import com.example.navigation.DAO.HomeDAO;
 import com.example.navigation.repository.HomeRepository;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class HomeViewModel extends AndroidViewModel {
 
