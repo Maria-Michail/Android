@@ -66,4 +66,9 @@ public class DeadlinesAdapter extends RecyclerView.Adapter<DeadlinesAdapter.View
     public interface OnListItemClickListener {
         void onClick(int position);
     }
+
+    public void updateData(List<Task> tasks) {
+        this.tasks = tasks;
+        notifyDataSetChanged();
+    }
 }

@@ -82,4 +82,9 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         void onClick(int position);
         void onDelete(int position);
     }
+
+    public void updateData(List<Task> tasks) {
+        this.tasks = tasks;
+        notifyDataSetChanged();
+    }
 }

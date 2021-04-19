@@ -45,7 +45,7 @@ public class DeadlinesFragment extends Fragment implements DeadlinesAdapter.OnLi
         deadlinesViewModel.getDeadlines().observe(getViewLifecycleOwner(), new Observer<List<Task>>() {
             @Override
             public void onChanged(List<Task> tasks) {
-                adapter.notifyDataSetChanged();
+                adapter.updateData(tasks);
             }
         });
 

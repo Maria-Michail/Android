@@ -32,7 +32,7 @@ public class HomeViewModel extends AndroidViewModel {
         return repository.getTasks();
     }
 
-    public void deleteTask(int position) {
-        repository.removeTask(position);
+    public void deleteTask(Task task) {
+        repository.removeTask(task);
     }
 }

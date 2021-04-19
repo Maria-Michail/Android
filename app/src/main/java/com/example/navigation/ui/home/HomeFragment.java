@@ -43,7 +43,7 @@ public class HomeFragment extends Fragment implements HomeAdapter.OnListItemClic
         homeViewModel.getTasks().observe(getViewLifecycleOwner(), new Observer<List<Task>>() {
             @Override
             public void onChanged(List<Task> tasks) {
-                adapter.notifyDataSetChanged();
+                adapter.updateData(tasks);
             }
         });
 
@@ -67,7 +67,8 @@ public class HomeFragment extends Fragment implements HomeAdapter.OnListItemClic
 
     @Override
     public void onDelete(int position) {
-        homeViewModel.deleteTask(position);
+        Task task = homeViewModel.getTasks().getValue().get(position);
+        homeViewModel.deleteTask(task);
         adapter.notifyItemRemoved(position);
     }
 
