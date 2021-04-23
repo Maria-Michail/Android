@@ -15,7 +15,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="#41b7bf"
+            android:background="#d69287"
             app:popupTheme="@style/Theme.Navigation.PopupOverlay"
             />
 
@@ -30,6 +30,6 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@drawable/ic_baseline_add_24"
-        android:backgroundTint="#41b7bf"/>
+        android:backgroundTint="#d69287"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

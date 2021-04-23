@@ -11,12 +11,14 @@ public class Task {
     private boolean deadline;
     private String date;
     private String time;
+    private boolean done;
 
     public Task(String name, boolean deadline, String date, String time) {
         this.name = name;
         this.deadline = deadline;
         this.date = date;
         this.time = time;
+        done = false;
     }
 
     public int getId() {
@@ -39,6 +41,10 @@ public class Task {
         return time;
     }
 
+    public boolean isDone() {
+        return done;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -57,5 +63,9 @@ public class Task {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public void setDone(boolean done) {
+        this.done = done;
     }
 }

@@ -82,9 +82,10 @@ public class HomeRepository {
 
     public void removeTask(Task task) {
         executorService.execute(() -> taskDao.delete(task));
-        List<Task> tempListtasks = tasks.getValue();
-        tempListtasks.remove(task);
     }
 
 
+    public void updateTask(Task task) {
+        executorService.execute(() -> taskDao.update(task));
+    }
 }

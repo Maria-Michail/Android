@@ -35,4 +35,8 @@ public class HomeViewModel extends AndroidViewModel {
     public void deleteTask(Task task) {
         repository.removeTask(task);
     }
+
+    public void updateTask(Task task) {
+        repository.updateTask(task);
+    }
 }

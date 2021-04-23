@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.deadlines.DeadlinesFragment"
-    android:background="#f0fbff">
+    android:background="@drawable/flowers">
 
     <TextView
         android:id="@+id/text_slideshow"
@@ -16,7 +16,9 @@
         android:layout_marginEnd="8dp"
         android:textAlignment="center"
         android:text="Deadlines"
-        android:textColor="#24647d"
+        android:textColor="@color/white"
+        android:shadowColor="#a1704d"
+        android:shadowRadius="5"
         android:textSize="30sp"
         android:fontFamily="sans-serif-black"
         app:layout_constraintEnd_toEndOf="parent"
@@ -26,11 +28,12 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_deadlines"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="96dp"
+        android:layout_width="341dp"
+        android:layout_height="494dp"
+        android:layout_marginTop="100dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.15"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/white"
+        android:padding="10dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

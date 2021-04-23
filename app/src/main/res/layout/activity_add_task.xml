@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.addTask.AddTask">
+    tools:context=".ui.addTask.AddTask"
+    android:background="@drawable/tile">
 
     <TextView
         android:layout_width="wrap_content"
@@ -45,12 +46,12 @@
 
     <CheckBox
         android:id="@+id/checkBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="132dp"
-        android:text="CheckBox"
+        android:layout_width="53dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="144dp"
+        android:text=""
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.668"
+        app:layout_constraintHorizontal_bias="0.603"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -112,7 +113,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="432dp"
         android:text="Add task"
-        android:backgroundTint="#985bab"
+        android:backgroundTint="#d69287"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.47"
         app:layout_constraintStart_toStartOf="parent"

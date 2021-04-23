@@ -1,5 +1,6 @@
 package com.example.navigation.ui.home;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import com.example.navigation.R;
 
@@ -57,19 +60,36 @@ public class HomeFragment extends Fragment implements HomeAdapter.OnListItemClic
         recyclerView.setAdapter(adapter);
 
 
+        SwipeHelper swipeHelper = new SwipeHelper(getActivity()) {
+            @Override
+            public void instantiateUnderlayButton(RecyclerView.ViewHolder viewHolder, List<UnderlayButton> underlayButtons) {
+                underlayButtons.add(new SwipeHelper.UnderlayButton(
+                        "Delete",
+                        0,
+                        Color.parseColor("#b37670"),
+                        new SwipeHelper.UnderlayButtonClickListener() {
+                            @Override
+                            public void onClick(final int pos) {
+                                final Task task = homeViewModel.getTasks().getValue().get(pos);
+                                homeViewModel.deleteTask(task);
+                                adapter.notifyItemRemoved(pos);
+                                Snackbar snackbar = Snackbar.make(recyclerView, "Item was removed from the list.", Snackbar.LENGTH_LONG);
+                                snackbar.show();
+                            }
+                        }
+                ));
+            }
+        };
+        swipeHelper.attachToRecyclerView(recyclerView);
+
         return root;
     }
 
     @Override
     public void onClick(int position) {
-        Toast.makeText(getContext(),"Position: " + position, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onDelete(int position) {
-        Task task = homeViewModel.getTasks().getValue().get(position);
-        homeViewModel.deleteTask(task);
-        adapter.notifyItemRemoved(position);
+        final Task task = homeViewModel.getTasks().getValue().get(position);
+        homeViewModel.updateTask(task);
+        adapter.notifyItemChanged(position);
     }
 
 

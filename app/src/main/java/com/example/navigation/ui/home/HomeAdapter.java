@@ -36,6 +36,13 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull HomeAdapter.ViewHolder holder, int position) {
         holder.home_task_time.setText(tasks.get(position).getTime());
         holder.home_task_item.setText(tasks.get(position).getName());
+        if(tasks.get(position).isDone()){
+            holder.imageViewDone.setVisibility(View.VISIBLE);
+        }
+        else {
+            holder.imageViewDone.setVisibility(View.INVISIBLE);
+        }
+
     }
 
     @Override
@@ -51,28 +58,18 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView home_task_item;
         TextView home_task_time;
-        ImageView deleteTask;
+        ImageView imageViewDone;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             home_task_item = itemView.findViewById(R.id.home_task_item);
             home_task_time = itemView.findViewById(R.id.home_task_time);
-            deleteTask = itemView.findViewById(R.id.delete);
+            imageViewDone = itemView.findViewById(R.id.done);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Task task = tasks.get(getAdapterPosition());
+                    task.setDone(!task.isDone());
                     onListItemClickListener.onClick(getAdapterPosition());
-                    if (!home_task_item.getPaint().isStrikeThruText()){
-                        home_task_item.setPaintFlags(home_task_item.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                    }
-                    else {
-                        home_task_item.setPaintFlags(home_task_item.getPaintFlags()& (~Paint.STRIKE_THRU_TEXT_FLAG));
-                    }
-                }
-            });
-            deleteTask.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onListItemClickListener.onDelete(getAdapterPosition());
                 }
             });
         }
@@ -80,8 +77,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
 
     public interface OnListItemClickListener{
         void onClick(int position);
-        void onDelete(int position);
     }
+
 
     public void updateData(List<Task> tasks) {
         this.tasks = tasks;
