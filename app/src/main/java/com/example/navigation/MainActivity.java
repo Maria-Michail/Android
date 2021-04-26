@@ -42,11 +42,6 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         //to go back
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(v ->{
-            Intent intent = new Intent(this, AddTask.class);
-            startActivity(intent);
-        });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -58,6 +53,14 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(v ->{
+            navController.navigate(R.id.nav_addtask);
+            //Intent intent = new Intent(this, AddTask.class);
+            //startActivity(intent);
+        });
+
 
 
     }
@@ -74,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.nav_calendar:
+            case R.id.nav_settings:
                 NavigationUI.onNavDestinationSelected(item, Navigation.findNavController(this, R.id.nav_host_fragment));
                 return true;
             default:

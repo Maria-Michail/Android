@@ -22,4 +22,17 @@
         android:name="com.example.navigation.ui.deadlines.DeadlinesFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_deadlines" />
+
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="com.example.navigation.SettingsActivity$SettingsFragment"
+        android:label="Settings"
+        tools:layout="@layout/settings_activity" />
+
+    <fragment
+        android:id="@+id/nav_addtask"
+        android:name="com.example.navigation.ui.addTask.AddTask"
+        android:label="AddTask"
+        tools:layout="@layout/activity_add_task" />
+
 </navigation>

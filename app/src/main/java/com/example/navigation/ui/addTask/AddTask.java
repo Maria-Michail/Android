@@ -1,13 +1,17 @@
 package com.example.navigation.ui.addTask;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -20,7 +24,7 @@ import com.example.navigation.ui.home.Task;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class AddTask extends AppCompatActivity {
+public class AddTask extends Fragment {
 
     EditText title;
     CheckBox deadline;
@@ -28,16 +32,15 @@ public class AddTask extends AppCompatActivity {
     EditText time;
     private AddTaskViewModel addTaskViewModel;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_task);
-        addTaskViewModel = new ViewModelProvider(this).get(AddTaskViewModel.class);
 
-        title = findViewById(R.id.add_title);
-        deadline = findViewById(R.id.checkBox);
-        date = findViewById(R.id.add_date);
-        time = findViewById(R.id.add_time);
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
+        addTaskViewModel = new ViewModelProvider(this).get(AddTaskViewModel.class);
+        View root = inflater.inflate(R.layout.activity_add_task, container, false);
+        title = root.findViewById(R.id.add_title);
+        deadline = root.findViewById(R.id.checkBox);
+        date = root.findViewById(R.id.add_date);
+        time = root.findViewById(R.id.add_time);
 
         date.setInputType(InputType.TYPE_NULL);
         time.setInputType(InputType.TYPE_NULL);
@@ -54,6 +57,8 @@ public class AddTask extends AppCompatActivity {
                 showTimeDialog(time);
             }
         });
+
+        return root;
     }
 
     private void showTimeDialog(EditText time) {
@@ -68,7 +73,7 @@ public class AddTask extends AppCompatActivity {
                 time.setText(simpleTimeFormat.format(calendar.getTime()));
             }
         };
-        new TimePickerDialog(AddTask.this, timeSetListener, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), false).show();
+        new TimePickerDialog(getContext(), timeSetListener, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), false).show();
     }
 
     private void showDateDialog(EditText date) {
@@ -83,12 +88,12 @@ public class AddTask extends AppCompatActivity {
                 date.setText(simpleDateFormat.format(calendar.getTime()));
             }
         };
-        new DatePickerDialog(AddTask.this, dateSetListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
+        new DatePickerDialog(getContext(), dateSetListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
     }
 
     public void saveTask(View v) {
         addTaskViewModel.insert(new Task(title.getText().toString(), deadline.isChecked(), date.getText().toString(), time.getText().toString()));
-        Toast.makeText(this, "Task added", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "Task added", Toast.LENGTH_SHORT).show();
         title.setText("");
     }
 }

@@ -40,7 +40,6 @@ public class CalendarFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
         calendarViewModel = new ViewModelProvider(this).get(CalendarViewModel.class);
         View root = inflater.inflate(R.layout.fragment_calendar, container, false);
 
