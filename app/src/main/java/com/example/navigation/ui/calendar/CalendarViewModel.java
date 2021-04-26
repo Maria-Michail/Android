@@ -14,6 +14,7 @@ public class CalendarViewModel extends AndroidViewModel {
     private MutableLiveData<String> mText;
     private HomeRepository repository;
 
+
     public CalendarViewModel(Application application) {
         super(application);
         mText = new MutableLiveData<>();
@@ -26,5 +27,13 @@ public class CalendarViewModel extends AndroidViewModel {
 
     public void goToDay(final String date) {
         repository.goToDay(date);
+    }
+
+    LiveData<String> getNameDayBack() {
+        return repository.getNameDayBack();
+    }
+
+    public void getNameDay(int month, int day){
+        repository.getNameDay(month, day);
     }
 }

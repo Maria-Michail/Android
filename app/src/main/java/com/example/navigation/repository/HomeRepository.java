@@ -2,10 +2,14 @@ package com.example.navigation.repository;
 
 import android.app.Application;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.navigation.API.NameAPI;
+import com.example.navigation.API.NameResponse;
+import com.example.navigation.API.ServiceGenerator;
 import com.example.navigation.DAO.TaskDAO;
 import com.example.navigation.DAO.TaskDatabase;
 import com.example.navigation.ui.home.Task;
@@ -17,6 +21,11 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.internal.EverythingIsNonNull;
+
 public class HomeRepository {
 
     private static HomeRepository instance;
@@ -26,6 +35,7 @@ public class HomeRepository {
     private LiveData<List<Task>> deadlines;
     private MutableLiveData<String> day;
     private final ExecutorService executorService;
+    private final MutableLiveData<String> nameDay;
 
     private HomeRepository(Application application){
         TaskDatabase database = TaskDatabase.getInstance(application);
@@ -34,6 +44,7 @@ public class HomeRepository {
         tasks = new MutableLiveData<>();
         deadlines = new MutableLiveData<>();
         day = new MutableLiveData<>();
+        nameDay = new MutableLiveData<>();
 
         executorService = Executors.newFixedThreadPool(2);
 
@@ -87,5 +98,31 @@ public class HomeRepository {
 
     public void updateTask(Task task) {
         executorService.execute(() -> taskDao.update(task));
+    }
+
+    public LiveData<String> getNameDayBack() {
+        return nameDay;
+    }
+
+    public void getNameDay(int month, int day) {
+        NameAPI nameApi = ServiceGenerator.getNameApi();
+        String monthToSend = String.valueOf(month);
+        String dayToSend = String.valueOf(day);
+        String country = "dk";
+        Call<NameResponse> call = nameApi.getName(country, monthToSend, dayToSend);
+        call.enqueue(new Callback<NameResponse>() {
+            @EverythingIsNonNull
+            @Override
+            public void onResponse(Call<NameResponse> call, Response<NameResponse> response) {
+                if (response.isSuccessful()) {
+                    nameDay.setValue(response.body().getNameDay());
+                }
+            }
+            @EverythingIsNonNull
+            @Override
+            public void onFailure(Call<NameResponse> call, Throwable t) {
+                Log.i("Retrofit", "Something went wrong :(");
+            }
+        });
     }
 }

@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
+import com.bumptech.glide.Glide;
 import com.example.navigation.R;
 
 import org.naishadhparmar.zcustomcalendar.CustomCalendar;
@@ -35,6 +36,7 @@ public class CalendarFragment extends Fragment {
     CalendarView calendarView;
     TextView calendar_title;
     String date;
+    TextView nameDay;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -43,6 +45,8 @@ public class CalendarFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_calendar, container, false);
 
         calendar_title = root.findViewById(R.id.calendar_title);
+        nameDay = root.findViewById(R.id.nameDay);
+
         calendarViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
@@ -51,6 +55,7 @@ public class CalendarFragment extends Fragment {
         });
 
         calendarView = (CalendarView) root.findViewById(R.id.calendar);
+
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
@@ -61,6 +66,9 @@ public class CalendarFragment extends Fragment {
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy-MM-dd");
                 date = simpleDateFormat.format(calendar.getTime());
                 calendar_title.setText(date);
+
+                //put name day
+                calendarViewModel.getNameDay(month, dayOfMonth);
             }
         });
 
@@ -69,6 +77,13 @@ public class CalendarFragment extends Fragment {
             public void onClick(View v) {
                 calendarViewModel.goToDay(calendar_title.getText().toString());
                 Navigation.findNavController(v).navigate(R.id.nav_home);
+            }
+        });
+
+        calendarViewModel.getNameDayBack().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String nameDayGet) {
+                nameDay.setText(nameDayGet);
             }
         });
 
