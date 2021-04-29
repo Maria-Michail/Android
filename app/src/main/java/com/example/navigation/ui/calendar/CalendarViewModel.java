@@ -21,9 +21,9 @@ public class CalendarViewModel extends AndroidViewModel {
         repository = HomeRepository.getInstance(application);
     }
 
-    public LiveData<String> getText() {
+    /*public LiveData<String> getText() {
         return repository.getDay();
-    }
+    }*/
 
     public void goToDay(final String date) {
         repository.goToDay(date);
