@@ -34,8 +34,27 @@ public class HomeFragment extends Fragment implements HomeAdapter.OnListItemClic
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         root.setBackground(getResources().getDrawable(R.drawable.coral_palm_trees));
+
+        homeViewModel.getBackground().observe(getActivity(), message -> {
+            if (message != null){
+                if(message.getBody().contentEquals("coral_palm_trees")){
+                    root.setBackground(getResources().getDrawable(R.drawable.coral_palm_trees));
+                }
+                else if(message.getBody().contentEquals("autumn_leaves")){
+                    root.setBackground(getResources().getDrawable(R.drawable.autumn_leaves));
+                }
+                else if(message.getBody().contentEquals("sakura_tree")){
+                    root.setBackground(getResources().getDrawable(R.drawable.sakura_tree));
+                }
+                else if(message.getBody().contentEquals("pink_flowers")){
+                    root.setBackground(getResources().getDrawable(R.drawable.pink_flowers));
+                }
+            }
+
+        });
 
         home_date = root.findViewById(R.id.home_date);
         homeViewModel.getDay().observe(getViewLifecycleOwner(), new Observer<String>() {
@@ -82,6 +101,8 @@ public class HomeFragment extends Fragment implements HomeAdapter.OnListItemClic
             }
         };
         swipeHelper.attachToRecyclerView(recyclerView);
+
+
 
         return root;
     }

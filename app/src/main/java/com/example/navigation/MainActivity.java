@@ -34,11 +34,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         viewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
         viewModel.init();
         NavigationView navigationView = findViewById(R.id.nav_view);
         name = navigationView.getHeaderView(0).findViewById(R.id.nameInHeader);
         checkIfSignedIn();
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //to go back
@@ -61,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
             //Intent intent = new Intent(this, AddTask.class);
             //startActivity(intent);
         });
+
 
     }
 

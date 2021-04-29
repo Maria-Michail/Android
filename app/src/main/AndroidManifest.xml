@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Navigation">
         <activity
-            android:name=".SettingsActivity"
+            android:name=".ui.settings.SettingsActivity"
             android:label="@string/title_activity_settings"></activity>
         <activity
             android:name=".ui.addTask.AddTask"

@@ -13,6 +13,8 @@ import com.example.navigation.API.ServiceGenerator;
 import com.example.navigation.DAO.TaskDAO;
 import com.example.navigation.DAO.TaskDatabase;
 import com.example.navigation.ui.home.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,6 +31,10 @@ import retrofit2.internal.EverythingIsNonNull;
 public class HomeRepository {
 
     private static HomeRepository instance;
+    //background firebase
+    private DatabaseReference myRef;
+    private BackgroundLiveData backgroundLiveData;
+
     private final TaskDAO taskDao;
     private final LiveData<List<Task>> allTasks;
     private LiveData<List<Task>> tasks;
@@ -37,8 +43,10 @@ public class HomeRepository {
     private final ExecutorService executorService;
     private final MutableLiveData<String> nameDay;
 
+
     private HomeRepository(Application application){
         TaskDatabase database = TaskDatabase.getInstance(application);
+
         taskDao = database.taskDao();
 
         tasks = new MutableLiveData<>();
@@ -59,11 +67,16 @@ public class HomeRepository {
         deadlines = taskDao.getDeadlines();
     }
 
-    public static HomeRepository getInstance(Application application){
+    public static synchronized HomeRepository getInstance(Application application){
         if(instance == null)
             instance = new HomeRepository(application);
 
         return instance;
+    }
+
+    public void init(String userId) {
+        myRef = FirebaseDatabase.getInstance().getReference().child("users").child(userId);
+        backgroundLiveData = new BackgroundLiveData(myRef);
     }
 
     public LiveData<List<Task>> getAllTasks() {
@@ -124,5 +137,13 @@ public class HomeRepository {
                 Log.i("Retrofit", "Something went wrong :(");
             }
         });
+    }
+
+    public void saveBackground(String background) {
+        myRef.setValue(new Background(background));
+    }
+
+    public BackgroundLiveData getBackground() {
+        return backgroundLiveData;
     }
 }
