@@ -53,21 +53,13 @@ public class CalendarFragment extends Fragment {
             }
         });
 
-        calendarView = (CalendarView) root.findViewById(R.id.calendar);
+        calendarView = root.findViewById(R.id.calendar);
+        calendarView.setDate(calendarView.getDate());
 
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                Calendar calendar = Calendar.getInstance();
-                calendar.set(Calendar.YEAR, year);
-                calendar.set(Calendar.MONTH, month);
-                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy-MM-dd");
-                date = simpleDateFormat.format(calendar.getTime());
-                calendar_title.setText(date);
-
-                //put name day
-                calendarViewModel.getNameDay(month, dayOfMonth);
+                updateCalenderViews(year, month, dayOfMonth);
             }
         });
 
@@ -87,5 +79,18 @@ public class CalendarFragment extends Fragment {
         });
 
         return root;
+    }
+
+    private void updateCalenderViews(int year, int month, int dayOfMonth) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month);
+        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy-MM-dd");
+        date = simpleDateFormat.format(calendar.getTime());
+        calendar_title.setText(date);
+
+        //put name day
+        calendarViewModel.getNameDay(month, dayOfMonth);
     }
 }

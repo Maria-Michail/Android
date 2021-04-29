@@ -33,17 +33,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
         viewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
         viewModel.init();
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        name = navigationView.getHeaderView(0).findViewById(R.id.nameInHeader);
         checkIfSignedIn();
-        setContentView(R.layout.activity_main);
-        name = findViewById(R.id.nameInHeader);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //to go back
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
@@ -60,8 +61,6 @@ public class MainActivity extends AppCompatActivity {
             //Intent intent = new Intent(this, AddTask.class);
             //startActivity(intent);
         });
-
-
 
     }
 
@@ -97,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
             if (user != null) {
                 String message = user.getDisplayName();
                 System.out.println(message);
-                //name.setText(message);
+                name.setText(message);
             } else
                 startLoginActivity();
         });

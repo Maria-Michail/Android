@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Background Preference -->
+    <string-array name="background_entries">
+        <item>coral_palm_trees</item>
+        <item>autumn_leaves</item>
+        <item>sakura_tree</item>
+        <item>pink_flowers</item>
+    </string-array>
+
+    <string-array name="background_values">
+        <item>coral_palm_trees</item>
+        <item>autumn_leaves</item>
+        <item>sakura_tree</item>
+        <item>pink_flowers</item>
+    </string-array>
+</resources>

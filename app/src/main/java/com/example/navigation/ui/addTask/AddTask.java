@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -12,6 +13,7 @@ import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -58,6 +60,15 @@ public class AddTask extends Fragment {
             }
         });
 
+        final Button button = root.findViewById(R.id.add_button);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                addTaskViewModel.insert(new Task(title.getText().toString(), deadline.isChecked(), date.getText().toString(), time.getText().toString()));
+                Toast.makeText(getContext(), "Task added", Toast.LENGTH_SHORT).show();
+                title.setText("");
+            }
+        });
+
         return root;
     }
 
@@ -89,11 +100,5 @@ public class AddTask extends Fragment {
             }
         };
         new DatePickerDialog(getContext(), dateSetListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
-    }
-
-    public void saveTask(View v) {
-        addTaskViewModel.insert(new Task(title.getText().toString(), deadline.isChecked(), date.getText().toString(), time.getText().toString()));
-        Toast.makeText(getContext(), "Task added", Toast.LENGTH_SHORT).show();
-        title.setText("");
     }
 }
