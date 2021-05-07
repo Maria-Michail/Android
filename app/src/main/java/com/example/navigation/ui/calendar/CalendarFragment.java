@@ -46,12 +46,6 @@ public class CalendarFragment extends Fragment {
         calendar_title = root.findViewById(R.id.calendar_title);
         nameDay = root.findViewById(R.id.nameDay);
 
-        /*calendarViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                calendar_title.setText(s);
-            }
-        });*/
         calendarView = root.findViewById(R.id.calendar);
         calendarView.setDate(calendarView.getDate());
         updateCalenderViews(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH),Calendar.getInstance().get(Calendar.DATE));

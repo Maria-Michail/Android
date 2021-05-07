@@ -42,11 +42,13 @@ public class HomeRepository {
     private MutableLiveData<String> day;
     private final ExecutorService executorService;
     private final MutableLiveData<String> nameDay;
+    private String userId;
+    private UserRepository userRepository;
 
 
     private HomeRepository(Application application){
         TaskDatabase database = TaskDatabase.getInstance(application);
-
+        userRepository = UserRepository.getInstance(application);
         taskDao = database.taskDao();
 
         tasks = new MutableLiveData<>();
@@ -65,6 +67,7 @@ public class HomeRepository {
         allTasks = taskDao.getAllTasks();
         tasks = taskDao.getAllTasks(day.getValue());
         deadlines = taskDao.getDeadlines();
+
     }
 
     public static synchronized HomeRepository getInstance(Application application){
@@ -76,12 +79,10 @@ public class HomeRepository {
 
     public void init(String userId) {
         myRef = FirebaseDatabase.getInstance().getReference().child("users").child(userId);
+        this.userId = userId;
         backgroundLiveData = new BackgroundLiveData(myRef);
     }
 
-    public LiveData<List<Task>> getAllTasks() {
-        return allTasks;
-    }
 
     public LiveData<String> getDay() {
         return day;
@@ -140,10 +141,18 @@ public class HomeRepository {
     }
 
     public void saveBackground(String background) {
+        if(null == myRef){
+            userId = userRepository.getCurrentUser().getValue().getUid();
+            init(userId);
+        }
         myRef.setValue(new Background(background));
     }
 
     public BackgroundLiveData getBackground() {
+        if(null == myRef){
+            userId = userRepository.getCurrentUser().getValue().getUid();
+            init(userId);
+        }
         return backgroundLiveData;
     }
 }

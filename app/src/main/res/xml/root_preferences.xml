@@ -32,7 +32,7 @@
 
         <ListPreference
             app:dependency="customization"
-            app:defaultValue="Coral_Palm_Trees"
+            app:defaultValue="1"
             app:entries="@array/background_entries"
             app:entryValues="@array/background_values"
             app:key="chooseBackground"

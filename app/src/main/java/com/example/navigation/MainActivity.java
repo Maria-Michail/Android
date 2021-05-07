@@ -4,17 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.Menu;
-import android.view.View;
 import android.widget.TextView;
 
-import com.example.navigation.ui.addTask.AddTask;
 import com.example.navigation.ui.signin.SignInActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -33,10 +29,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
         viewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
-        viewModel.init();
+        try {
+            viewModel.init();
+        }catch (NullPointerException e){
+            System.out.println("No current user");
+        }
+        setContentView(R.layout.activity_main);
         NavigationView navigationView = findViewById(R.id.nav_view);
         name = navigationView.getHeaderView(0).findViewById(R.id.nameInHeader);
         checkIfSignedIn();
@@ -60,8 +60,6 @@ public class MainActivity extends AppCompatActivity {
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(v ->{
             navController.navigate(R.id.nav_addtask);
-            //Intent intent = new Intent(this, AddTask.class);
-            //startActivity(intent);
         });
 
 

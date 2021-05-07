@@ -40,22 +40,17 @@ public class SettingsActivity extends AppCompatActivity {
 
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
             listPreference = (ListPreference) findPreference("chooseBackground");
-            if(listPreference.getValue()==null) {
-                // to ensure we don't get a null value
-                // set first value by default
-                listPreference.setValueIndex(0);
-            }
-            listPreference.setSummary(listPreference.getValue().toString());
+
             listPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
-                    preference.setSummary(newValue.toString());
+                    saveBackground(newValue);
                     return true;
                 }
             });
         }
-        public void saveBackground(View v) {
-            settingsViewModel.saveBackground(listPreference.getValue().toString());
+        public void saveBackground(Object newValue) {
+            settingsViewModel.saveBackground(newValue.toString());
         }
     }
 }

@@ -14,6 +14,7 @@ public class UserRepository {
 
     private UserRepository(Application app) {
         this.app = app;
+        System.out.println("initialize");
         currentUser = new UserLiveData();
     }
 
@@ -24,7 +25,10 @@ public class UserRepository {
     }
 
     public LiveData<FirebaseUser> getCurrentUser() {
-        return currentUser;
+        if (null!=currentUser){
+            return currentUser;
+        }
+        return null;
     }
 
     public void signOut() {

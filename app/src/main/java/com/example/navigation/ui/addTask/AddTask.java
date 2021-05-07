@@ -1,10 +1,8 @@
 package com.example.navigation.ui.addTask;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -63,13 +61,17 @@ public class AddTask extends Fragment {
         final Button button = root.findViewById(R.id.add_button);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                addTaskViewModel.insert(new Task(title.getText().toString(), deadline.isChecked(), date.getText().toString(), time.getText().toString()));
-                Toast.makeText(getContext(), "Task added", Toast.LENGTH_SHORT).show();
-                title.setText("");
+                insertTask();
             }
         });
 
         return root;
+    }
+
+    private void insertTask(){
+        addTaskViewModel.insert(new Task(title.getText().toString(), deadline.isChecked(), date.getText().toString(), time.getText().toString()));
+        Toast.makeText(getContext(), "Task added", Toast.LENGTH_SHORT).show();
+        title.setText("");
     }
 
     private void showTimeDialog(EditText time) {

@@ -9,9 +9,9 @@
     </string-array>
 
     <string-array name="background_values">
-        <item>coral_palm_trees</item>
-        <item>autumn_leaves</item>
-        <item>sakura_tree</item>
-        <item>pink_flowers</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
     </string-array>
 </resources>

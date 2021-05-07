@@ -2,9 +2,11 @@ package com.example.navigation.ui.home;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,6 +24,10 @@ import com.google.android.material.snackbar.Snackbar;
 
 import com.example.navigation.R;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class HomeFragment extends Fragment implements HomeAdapter.OnListItemClickListener {
@@ -29,7 +36,7 @@ public class HomeFragment extends Fragment implements HomeAdapter.OnListItemClic
     TextView home_date;
     RecyclerView recyclerView;
     HomeAdapter adapter;
-    ImageView deleteTask;
+    //ImageView deleteTask;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -37,24 +44,6 @@ public class HomeFragment extends Fragment implements HomeAdapter.OnListItemClic
 
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         root.setBackground(getResources().getDrawable(R.drawable.coral_palm_trees));
-
-        homeViewModel.getBackground().observe(getActivity(), message -> {
-            if (message != null){
-                if(message.getBody().contentEquals("coral_palm_trees")){
-                    root.setBackground(getResources().getDrawable(R.drawable.coral_palm_trees));
-                }
-                else if(message.getBody().contentEquals("autumn_leaves")){
-                    root.setBackground(getResources().getDrawable(R.drawable.autumn_leaves));
-                }
-                else if(message.getBody().contentEquals("sakura_tree")){
-                    root.setBackground(getResources().getDrawable(R.drawable.sakura_tree));
-                }
-                else if(message.getBody().contentEquals("pink_flowers")){
-                    root.setBackground(getResources().getDrawable(R.drawable.pink_flowers));
-                }
-            }
-
-        });
 
         home_date = root.findViewById(R.id.home_date);
         homeViewModel.getDay().observe(getViewLifecycleOwner(), new Observer<String>() {
@@ -79,7 +68,7 @@ public class HomeFragment extends Fragment implements HomeAdapter.OnListItemClic
         adapter = new HomeAdapter(homeViewModel.getTasks().getValue(), this);
         recyclerView.setAdapter(adapter);
 
-
+        //delete an item
         SwipeHelper swipeHelper = new SwipeHelper(getActivity()) {
             @Override
             public void instantiateUnderlayButton(RecyclerView.ViewHolder viewHolder, List<UnderlayButton> underlayButtons) {
@@ -102,9 +91,63 @@ public class HomeFragment extends Fragment implements HomeAdapter.OnListItemClic
         };
         swipeHelper.attachToRecyclerView(recyclerView);
 
+        //change background from settings
+        try {
+            homeViewModel.getBackground().observe(getActivity(), message -> {
+                if (message != null){
+                    if(message.getBody().contentEquals("1")){
+                        root.setBackground(getResources().getDrawable(R.drawable.coral_palm_trees));
+                    }
+                    else if(message.getBody().contentEquals("2")){
+                        root.setBackground(getResources().getDrawable(R.drawable.autumn_leaves));
+                    }
+                    else if(message.getBody().contentEquals("3")){
+                        root.setBackground(getResources().getDrawable(R.drawable.sakura_tree));
+                    }
+                    else if(message.getBody().contentEquals("4")){
+                        root.setBackground(getResources().getDrawable(R.drawable.pink_flowers));
+                    }
+                }
 
+            });
+        }catch (Exception e){
+            System.out.println("No current user for background");
+        }
+
+        //go to next day
+        final Button goRightButton = root.findViewById(R.id.arrow_right);
+        goRightButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                goToOtherDay(1);
+                Navigation.findNavController(v).navigate(R.id.nav_home);
+            }
+        });
+
+        //go to previous day
+        final Button goLeftButton = root.findViewById(R.id.arrow_left);
+        goLeftButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                goToOtherDay(-1);
+                Navigation.findNavController(v).navigate(R.id.nav_home);
+            }
+        });
 
         return root;
+    }
+
+    void goToOtherDay(int day){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy-MM-dd");
+        Date date = null;
+        try {
+            date = simpleDateFormat.parse(home_date.getText().toString());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        c.add(Calendar.DATE, day);
+        String newDate = simpleDateFormat.format(c.getTime());
+        homeViewModel.goToDay(newDate);
     }
 
     @Override

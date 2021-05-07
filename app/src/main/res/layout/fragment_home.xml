@@ -89,5 +89,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/arrow_right"
+        android:layout_width="61dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="592dp"
+        android:background="@drawable/arrow_right"
+        android:text=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.625"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/arrow_left"
+        android:layout_width="61dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="592dp"
+        android:background="@drawable/arrow_left"
+        android:text=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.375"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
