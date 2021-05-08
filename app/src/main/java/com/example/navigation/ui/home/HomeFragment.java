@@ -36,15 +36,16 @@ public class HomeFragment extends Fragment implements HomeAdapter.OnListItemClic
     TextView home_date;
     RecyclerView recyclerView;
     HomeAdapter adapter;
+    View root;
     //ImageView deleteTask;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
-        root.setBackground(getResources().getDrawable(R.drawable.coral_palm_trees));
-
+        root = inflater.inflate(R.layout.fragment_home, container, false);
+      
+            root.setBackground(getResources().getDrawable(R.drawable.coral_palm_trees));
         home_date = root.findViewById(R.id.home_date);
         homeViewModel.getDay().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
@@ -94,21 +95,8 @@ public class HomeFragment extends Fragment implements HomeAdapter.OnListItemClic
         //change background from settings
         try {
             homeViewModel.getBackground().observe(getActivity(), message -> {
-                if (message != null){
-                    if(message.getBody().contentEquals("1")){
-                        root.setBackground(getResources().getDrawable(R.drawable.coral_palm_trees));
-                    }
-                    else if(message.getBody().contentEquals("2")){
-                        root.setBackground(getResources().getDrawable(R.drawable.autumn_leaves));
-                    }
-                    else if(message.getBody().contentEquals("3")){
-                        root.setBackground(getResources().getDrawable(R.drawable.sakura_tree));
-                    }
-                    else if(message.getBody().contentEquals("4")){
-                        root.setBackground(getResources().getDrawable(R.drawable.pink_flowers));
-                    }
-                }
-
+                root = inflater.inflate(R.layout.fragment_home, container, false);
+                setBackground(message.getBody());
             });
         }catch (Exception e){
             System.out.println("No current user for background");
@@ -133,6 +121,26 @@ public class HomeFragment extends Fragment implements HomeAdapter.OnListItemClic
         });
 
         return root;
+    }
+
+    void setBackground(String message){
+        if (message != null){
+            if(message.contentEquals("1")){
+                root.setBackground(getResources().getDrawable(R.drawable.coral_palm_trees));
+            }
+            else if(message.contentEquals("2")){
+                root.setBackground(getResources().getDrawable(R.drawable.autumn_leaves));
+            }
+            else if(message.contentEquals("3")){
+                root.setBackground(getResources().getDrawable(R.drawable.sakura_tree));
+            }
+            else if(message.contentEquals("4")){
+                root.setBackground(getResources().getDrawable(R.drawable.pink_flowers));
+            }
+        }
+        else {
+            root.setBackground(getResources().getDrawable(R.drawable.coral_palm_trees));
+        }
     }
 
     void goToOtherDay(int day){

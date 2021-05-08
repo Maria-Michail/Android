@@ -21,8 +21,11 @@ import android.widget.Toast;
 import com.example.navigation.R;
 import com.example.navigation.ui.home.Task;
 
+import java.sql.Time;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class AddTask extends Fragment {
 
@@ -31,6 +34,8 @@ public class AddTask extends Fragment {
     EditText date;
     EditText time;
     private AddTaskViewModel addTaskViewModel;
+    SimpleDateFormat simpleTimeFormat;
+    SimpleDateFormat simpleDateFormat;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -61,17 +66,32 @@ public class AddTask extends Fragment {
         final Button button = root.findViewById(R.id.add_button);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                insertTask();
+                try {
+                    insertTask();
+                } catch (ParseException | NullPointerException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getContext(), "Wrong date or time", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
         return root;
     }
 
-    private void insertTask(){
-        addTaskViewModel.insert(new Task(title.getText().toString(), deadline.isChecked(), date.getText().toString(), time.getText().toString()));
-        Toast.makeText(getContext(), "Task added", Toast.LENGTH_SHORT).show();
-        title.setText("");
+    private void insertTask() throws ParseException {
+        Date parseDate = simpleDateFormat.parse(date.getText().toString());
+        Date parseTime = simpleTimeFormat.parse(time.getText().toString());
+        if(null == title.getText().toString() || title.getText().toString().isEmpty()){
+            Toast.makeText(getContext(), "Wrong Title", Toast.LENGTH_SHORT).show();
+        }
+        else if(title.getText().toString().length()>20){
+            Toast.makeText(getContext(), "Title too long", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            addTaskViewModel.insert(new Task(title.getText().toString(), deadline.isChecked(), date.getText().toString(), time.getText().toString()));
+            Toast.makeText(getContext(), "Task added", Toast.LENGTH_SHORT).show();
+            title.setText("");
+        }
     }
 
     private void showTimeDialog(EditText time) {
@@ -82,7 +102,7 @@ public class AddTask extends Fragment {
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
                 calendar.set(Calendar.MINUTE, minute);
-                SimpleDateFormat simpleTimeFormat = new SimpleDateFormat("HH:mm");
+                simpleTimeFormat = new SimpleDateFormat("HH:mm");
                 time.setText(simpleTimeFormat.format(calendar.getTime()));
             }
         };
@@ -97,7 +117,7 @@ public class AddTask extends Fragment {
                 calendar.set(Calendar.YEAR, year);
                 calendar.set(Calendar.MONTH, month);
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy-MM-dd");
+                simpleDateFormat = new SimpleDateFormat("yy-MM-dd");
                 date.setText(simpleDateFormat.format(calendar.getTime()));
             }
         };
