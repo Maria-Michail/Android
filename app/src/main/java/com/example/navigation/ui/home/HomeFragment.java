@@ -44,8 +44,8 @@ public class HomeFragment extends Fragment implements HomeAdapter.OnListItemClic
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 
         root = inflater.inflate(R.layout.fragment_home, container, false);
-      
-            root.setBackground(getResources().getDrawable(R.drawable.coral_palm_trees));
+
+        root.setBackground(getResources().getDrawable(R.drawable.coral_palm_trees));
         home_date = root.findViewById(R.id.home_date);
         homeViewModel.getDay().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
@@ -95,7 +95,6 @@ public class HomeFragment extends Fragment implements HomeAdapter.OnListItemClic
         //change background from settings
         try {
             homeViewModel.getBackground().observe(getActivity(), message -> {
-                root = inflater.inflate(R.layout.fragment_home, container, false);
                 setBackground(message.getBody());
             });
         }catch (Exception e){
