@@ -1,5 +1,6 @@
 package com.example.navigation.ui.home;
 
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,11 +39,18 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         holder.home_task_item.setText(tasks.get(position).getName());
         if(tasks.get(position).isDone()){
             holder.imageViewDone.setVisibility(View.VISIBLE);
+            holder.imageViewInProgress.setVisibility(View.INVISIBLE);
         }
-        else {
+        else if(!tasks.get(position).isDone()){
             holder.imageViewDone.setVisibility(View.INVISIBLE);
+            holder.imageViewInProgress.setVisibility(View.VISIBLE);
         }
-
+        if(tasks.get(position).isDeadline()){
+            holder.imageViewDeadline.setVisibility(View.VISIBLE);
+        }
+        else if(!tasks.get(position).isDeadline()){
+            holder.imageViewDeadline.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
@@ -59,11 +67,15 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         TextView home_task_item;
         TextView home_task_time;
         ImageView imageViewDone;
+        ImageView imageViewInProgress;
+        ImageView imageViewDeadline;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             home_task_item = itemView.findViewById(R.id.home_task_item);
             home_task_time = itemView.findViewById(R.id.home_task_time);
             imageViewDone = itemView.findViewById(R.id.done);
+            imageViewInProgress = itemView.findViewById(R.id.inProgress);
+            imageViewDeadline = itemView.findViewById(R.id.deadlineIcon);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

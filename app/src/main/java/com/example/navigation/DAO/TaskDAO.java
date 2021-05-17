@@ -31,6 +31,6 @@ public interface TaskDAO {
     @Query("SELECT * FROM task_table WHERE date LIKE :day ORDER BY time ASC")
     LiveData<List<Task>> getAllTasks(String day);
 
-    @Query("SELECT * FROM task_table WHERE deadline = 1 & done = 0 ORDER BY date ASC")
+    @Query("SELECT * FROM task_table WHERE deadline = 1 AND done = 0 ORDER BY date ASC")
     LiveData<List<Task>> getDeadlines();
 }

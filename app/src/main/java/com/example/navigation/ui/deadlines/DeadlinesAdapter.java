@@ -1,5 +1,6 @@
 package com.example.navigation.ui.deadlines;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,9 @@ import com.example.navigation.R;
 import com.example.navigation.ui.home.HomeAdapter;
 import com.example.navigation.ui.home.Task;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 
@@ -19,6 +23,7 @@ public class DeadlinesAdapter extends RecyclerView.Adapter<DeadlinesAdapter.View
 
     List<Task> tasks;
     DeadlinesAdapter.OnListItemClickListener onListItemClickListener;
+    String dateOfToday;
 
     public DeadlinesAdapter(List<Task> tasks, DeadlinesAdapter.OnListItemClickListener onListItemClickListener){
         this.tasks = tasks;
@@ -37,6 +42,15 @@ public class DeadlinesAdapter extends RecyclerView.Adapter<DeadlinesAdapter.View
     public void onBindViewHolder(@NonNull DeadlinesAdapter.ViewHolder holder, int position) {
         holder.deadline_date.setText(tasks.get(position).getDate());
         holder.deadline_item.setText(tasks.get(position).getName());
+        Date dateToday = Calendar.getInstance().getTime();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy-MM-dd");
+        dateOfToday = simpleDateFormat.format(dateToday);
+        if(tasks.get(position).getDate().compareTo(dateOfToday)<0){
+            holder.deadline_item.setTextColor(Color.parseColor("#ad7b0e"));
+        }
+        else{
+            holder.deadline_item.setTextColor(Color.parseColor("#050401"));
+        }
     }
 
     @Override
@@ -69,6 +83,7 @@ public class DeadlinesAdapter extends RecyclerView.Adapter<DeadlinesAdapter.View
 
     public void updateData(List<Task> tasks) {
         this.tasks = tasks;
+        System.out.println("this is the current size " + tasks.size());
         notifyDataSetChanged();
     }
 }
