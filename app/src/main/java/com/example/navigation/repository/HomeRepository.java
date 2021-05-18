@@ -36,7 +36,6 @@ public class HomeRepository {
     private BackgroundLiveData backgroundLiveData;
 
     private final TaskDAO taskDao;
-    private final LiveData<List<Task>> allTasks;
     private LiveData<List<Task>> tasks;
     private LiveData<List<Task>> deadlines;
     private MutableLiveData<String> day;
@@ -63,8 +62,6 @@ public class HomeRepository {
         String dateNow = formatter.format(dateToday);
         day.setValue(dateNow);
 
-
-        allTasks = taskDao.getAllTasks();
         tasks = taskDao.getAllTasks(day.getValue());
         deadlines = taskDao.getDeadlines();
 

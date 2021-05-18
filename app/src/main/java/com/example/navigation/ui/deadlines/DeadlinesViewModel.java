@@ -15,18 +15,12 @@ import java.util.List;
 public class DeadlinesViewModel extends AndroidViewModel {
 
     private HomeRepository repository;
-    private MutableLiveData<String> title;
 
     public DeadlinesViewModel(Application application) {
         super(application);
         repository = HomeRepository.getInstance(application);
-        title = new MutableLiveData<>();
-        title.setValue("Deadlines");
     }
 
-    public LiveData<String> getText() {
-        return title;
-    }
     public LiveData<List<Task>> getDeadlines(){
         return repository.getDeadlines();
     }

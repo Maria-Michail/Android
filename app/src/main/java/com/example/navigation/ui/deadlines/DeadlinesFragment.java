@@ -24,7 +24,6 @@ import java.util.List;
 public class DeadlinesFragment extends Fragment implements DeadlinesAdapter.OnListItemClickListener{
 
     private DeadlinesViewModel deadlinesViewModel;
-    TextView textView;
     RecyclerView recyclerView;
     DeadlinesAdapter adapter;
 
@@ -33,14 +32,6 @@ public class DeadlinesFragment extends Fragment implements DeadlinesAdapter.OnLi
         deadlinesViewModel =
                 new ViewModelProvider(this).get(DeadlinesViewModel.class);
         View root = inflater.inflate(R.layout.fragment_deadlines, container, false);
-
-        textView = root.findViewById(R.id.text_slideshow);
-        deadlinesViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
 
         deadlinesViewModel.getDeadlines().observe(getViewLifecycleOwner(), new Observer<List<Task>>() {
             @Override

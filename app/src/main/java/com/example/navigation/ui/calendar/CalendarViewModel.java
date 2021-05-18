@@ -11,13 +11,11 @@ import com.example.navigation.repository.HomeRepository;
 
 public class CalendarViewModel extends AndroidViewModel {
 
-    private MutableLiveData<String> mText;
     private HomeRepository repository;
 
 
     public CalendarViewModel(Application application) {
         super(application);
-        mText = new MutableLiveData<>();
         repository = HomeRepository.getInstance(application);
     }
 

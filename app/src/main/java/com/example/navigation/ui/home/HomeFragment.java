@@ -37,7 +37,6 @@ public class HomeFragment extends Fragment implements HomeAdapter.OnListItemClic
     RecyclerView recyclerView;
     HomeAdapter adapter;
     View root;
-    //ImageView deleteTask;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {

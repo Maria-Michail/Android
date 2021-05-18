@@ -42,13 +42,11 @@ public class AddTask extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         addTaskViewModel = new ViewModelProvider(this).get(AddTaskViewModel.class);
         View root = inflater.inflate(R.layout.activity_add_task, container, false);
+
         title = root.findViewById(R.id.add_title);
         deadline = root.findViewById(R.id.checkBox);
         date = root.findViewById(R.id.add_date);
         time = root.findViewById(R.id.add_time);
-
-        date.setInputType(InputType.TYPE_NULL);
-        time.setInputType(InputType.TYPE_NULL);
 
         date.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,6 +77,7 @@ public class AddTask extends Fragment {
     }
 
     private void insertTask() throws ParseException {
+        //this is to check if the date and time are correct values
         Date parseDate = simpleDateFormat.parse(date.getText().toString());
         Date parseTime = simpleTimeFormat.parse(time.getText().toString());
         if(null == title.getText().toString() || title.getText().toString().isEmpty()){

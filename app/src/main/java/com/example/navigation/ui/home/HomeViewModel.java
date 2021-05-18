@@ -14,16 +14,11 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.List;
 
 public class HomeViewModel extends AndroidViewModel {
-    private final UserRepository userRepository;
     private final HomeRepository repository;
-    //private MutableLiveData<String> home_date;
 
     public HomeViewModel(Application application) {
         super(application);
-        userRepository = UserRepository.getInstance(application);
         repository = HomeRepository.getInstance(application);
-        //home_date = new MutableLiveData<>();
-        //home_date.setValue("2021-09-04");
     }
 
     public LiveData<Background> getBackground() {

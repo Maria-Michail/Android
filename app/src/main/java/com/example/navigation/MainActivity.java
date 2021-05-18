@@ -1,5 +1,6 @@
 package com.example.navigation;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -43,12 +44,9 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //to go back
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
 
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_calendar, R.id.nav_deadlines)
                 .setDrawerLayout(drawer)
@@ -73,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
